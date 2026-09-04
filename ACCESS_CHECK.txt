@@ -1,0 +1,3 @@
+Access check: Copilot verified write access at 2026-09-04T23:59:00Z
+
+If you see this file, permissions are correctly configured.
