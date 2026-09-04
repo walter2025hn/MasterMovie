@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+def serverUrl = project.hasProperty("SERVER_URL") ? project.property("SERVER_URL") : ""
+
+android {
+    namespace 'com.mastermovie.app'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.mastermovie.app"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Proporciona la URL en BuildConfig para que el código no tenga la URL hardcoded.
+        buildConfigField "String", "SERVER_URL", "\"${serverUrl}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions { sourceCompatibility JavaVersion.VERSION_11; targetCompatibility JavaVersion.VERSION_11 }
+    kotlinOptions { jvmTarget = '11' }
+
+    buildFeatures {
+        compose true
+    }
+    composeOptions { kotlinCompilerExtensionVersion '1.5.3' }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+
+    // Jetpack Compose
+    implementation "androidx.activity:activity-compose:1.7.2"
+    implementation "androidx.compose.ui:ui:1.5.1"
+    implementation "androidx.compose.material:material:1.5.1"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.5.1"
+
+    // ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
+
+    // Retrofit + OkHttp
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+
+    // Room
+    implementation "androidx.room:room-runtime:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
+    implementation "androidx.room:room-ktx:2.6.1"
+
+    // Gson/Moshi if needed
+    implementation "com.squareup.moshi:moshi:1.15.0"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.15.0"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+}
